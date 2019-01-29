@@ -2,7 +2,9 @@ resource "vsphere_virtual_machine" "virtual_machine_bare" {
   count            = "${var.template_os_family == "" ? var.vm_count : 0}"
   name             = "${var.vm_name_prefix}${count.index}"
   resource_pool_id = "${data.vsphere_resource_pool.pool.id}"
-  datastore_id     = "${data.vsphere_datastore.ds.id}"
+  #datastore_id = "${element(var.datastores, count.index)}"
+  datastore_id = "${length(var.datastores) > 0 ? element(concat(var.datastores, list("")), count.index) : "${var.datastore}"}"
+  #datastore_id     = "${data.vsphere_datastore.ds.id}"
 
   num_cpus = "${var.num_cpus}"
   memory   = "${var.memory}"
@@ -21,4 +23,3 @@ resource "vsphere_virtual_machine" "virtual_machine_bare" {
 }
 
 # vim: filetype=terraform
-

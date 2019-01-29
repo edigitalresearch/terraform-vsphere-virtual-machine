@@ -8,8 +8,14 @@ variable "resource_pool" {
 }
 
 variable "datastore" {
-  type        = "string"
   description = "The datastore to deploy the virtual machines to."
+  default = ""
+}
+
+variable "datastores" {
+  type        = "list"
+  description = "A list of datastores to deploy the virtual machines to."
+  default = []
 }
 
 variable "network" {
